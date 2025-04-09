@@ -3,6 +3,7 @@ import axios from "axios";
 import { format } from "date-fns";
 import SecondaryButton from "./SecondaryButton";
 import Header from "./Header";
+import Search from "./Search";
 
 const JobList = () => {
   const [jobs, setJobs] = useState([]);
@@ -24,6 +25,7 @@ const JobList = () => {
   return (
     <div className="px-4">
       <Header></Header>
+      <Search />
       <ul className="grid md:grid-cols-3 lg:grid-cols-4 gap-6 my-20">
         {Array.isArray(jobs) && jobs.length > 0 ? (
           jobs.map((job) => (
