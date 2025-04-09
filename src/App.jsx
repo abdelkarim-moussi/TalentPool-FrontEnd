@@ -3,7 +3,7 @@ import NavBar from './components/NavBar'
 
 const App = () => {
   return (
-    <div>
+    <div className='bg-green-50'>
       <NavBar />
       <JobList />
     </div>
