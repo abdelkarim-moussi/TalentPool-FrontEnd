@@ -1,4 +1,5 @@
 import JobList from './components/JobList'
+import LoginForm from './components/LoginForm'
 import NavBar from './components/NavBar'
 
 const App = () => {
@@ -6,6 +7,7 @@ const App = () => {
     <div className='bg-green-50'>
       <NavBar />
       <JobList />
+      <LoginForm />
     </div>
   )
 }
