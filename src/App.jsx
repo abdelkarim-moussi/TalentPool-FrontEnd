@@ -1,6 +1,7 @@
 import JobList from './components/JobList'
 import LoginForm from './components/LoginForm'
 import NavBar from './components/NavBar'
+import RegisterForm from './components/RegisterForm'
 
 const App = () => {
   return (
@@ -8,6 +9,7 @@ const App = () => {
       <NavBar />
       <JobList />
       <LoginForm />
+      <RegisterForm />
     </div>
   )
 }
