@@ -1,6 +1,6 @@
 import React from "react";
 import PrimaryButton from "./PrimaryButton";
-
+import {Link } from "react-router-dom";
 const LoginForm = () => {
   return (
     <div className="flex flex-col justify-center items-center w-full max-w-[400px] mt-5">
@@ -16,8 +16,8 @@ const LoginForm = () => {
           <input className="w-full border border-black h-[35px] rounded-lg" id="password" name="password" type="password" />
         </div>
         
-        <PrimaryButton text="login" py="py-1.5"/>
-        <p className="text-center">don't have an account : <a className="text-semibold" href="">Sign Up</a></p>
+        <PrimaryButton text="login" extra="py-1.5"/>
+        <p className="text-center">don't have an account : <Link className="text-semibold" to="../register">Sign Up</Link></p>
       </div>
     </div>
   );
