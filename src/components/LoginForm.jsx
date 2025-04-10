@@ -3,7 +3,7 @@ import PrimaryButton from "./PrimaryButton";
 
 const LoginForm = () => {
   return (
-    <div className="flex flex-col justify-center items-center w-full max-w-[400px] m-5">
+    <div className="flex flex-col justify-center items-center w-full max-w-[400px] mt-5">
       <h3 className="text-md font-semibold uppercase">Log in</h3>
       <div className="w-full flex flex-col gap-4">
         <div>

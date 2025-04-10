@@ -1,17 +1,21 @@
-import JobList from './components/JobList'
-import LoginForm from './components/LoginForm'
-import NavBar from './components/NavBar'
-import RegisterForm from './components/RegisterForm'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import NavBar from "./components/NavBar";
+import JobListings from "./pages/JobListings";
+import Login from "./pages/Login";
 
 const App = () => {
   return (
-    <div className='bg-green-50'>
-      <NavBar />
-      <JobList />
-      <LoginForm />
-      <RegisterForm />
-    </div>
-  )
-}
+    <>
+    <BrowserRouter>
+    <NavBar />
+      <Routes>
+        <Route path="joblistings" element={<JobListings />}></Route>
+        <Route path="login" element={<Login />}></Route>
+        <Route path="sign up" element={<Login />}></Route>
+      </Routes>
+    </BrowserRouter>
+  </>
+  );
+};
 
-export default App
+export default App;
