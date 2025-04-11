@@ -20,6 +20,7 @@ const RegisterForm = ({setToken}) => {
         role,
         password,
         password_confirmation,
+        
       });
 
       alert(response.data.message);
