@@ -5,6 +5,10 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 
 const App = () => {
+
+  function setToken(){
+
+  }
   return (
     <>
     <BrowserRouter>

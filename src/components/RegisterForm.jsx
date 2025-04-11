@@ -3,13 +3,13 @@ import PrimaryButton from "./PrimaryButton";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const RegisterForm = () => {
+const RegisterForm = ({setToken}) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
   const [password, setPassword] = useState("");
   const [password_confirmation, setPassword_confirmation] = useState("");
-
+  
   const handleRegister = async (e) => {
     e.preventDefault();
 
@@ -23,6 +23,8 @@ const RegisterForm = () => {
       });
 
       alert(response.data.message);
+      sessionStorage.setItem('token',JSON.stringify(response.data.token));
+
     } catch (error) {
       console.error("Registration failed");
     }
