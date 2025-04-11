@@ -6,20 +6,17 @@ import Login from "./pages/Login";
 
 const App = () => {
 
-  function setToken(){
-
-  }
   return (
     <>
-    <BrowserRouter>
-    <NavBar />
-      <Routes>
-        <Route path="joblistings" element={<JobListings />}></Route>
-        <Route path="login" element={<Login />}></Route>
-        <Route path="register" element={<Register />}></Route>
-      </Routes>
-    </BrowserRouter>
-  </>
+      <BrowserRouter>
+        <NavBar />
+        <Routes>
+          <Route path="joblistings" element={<JobListings />}></Route>
+          <Route path="login" element={<Login />}></Route>
+          <Route path="register" element={<Register />}></Route>
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 };
 
