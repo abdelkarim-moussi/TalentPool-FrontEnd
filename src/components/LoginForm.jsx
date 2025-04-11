@@ -5,6 +5,8 @@ import axios from "axios";
 import Input from "./Input";
 
 const LoginForm = () => {
+  const methods = useForm();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -27,6 +29,7 @@ const LoginForm = () => {
   return (
     <div className="flex flex-col justify-center items-center w-full max-w-[400px] mt-5">
       <h3 className="text-md font-semibold uppercase">Log in</h3>
+      <FormProvider {...methods}>
       <form onSubmit={handleLogin} className="w-full flex flex-col gap-4">
         <Input
           label="Email"
@@ -34,6 +37,7 @@ const LoginForm = () => {
           id="email"
           type="email"
           value={email}
+          div_extra="flex-col"
           onChange={(e) => setEmail(e.target.value)}
         />
 
@@ -43,6 +47,7 @@ const LoginForm = () => {
           id="password"
           type="password"
           value={password}
+          div_extra="flex-col"
           onChange={(e) => setPassword(e.target.value)}
         />
 
@@ -55,6 +60,7 @@ const LoginForm = () => {
           </Link>
         </p>
       </form>
+      </FormProvider>
     </div>
   );
 };

@@ -41,6 +41,7 @@ const RegisterForm = () => {
           id="email"
           type="email"
           value={email}
+          div_extra="flex-col"
           onChange={(e) => setEmail(e.target.value)}
         />
 
@@ -50,6 +51,7 @@ const RegisterForm = () => {
           id="name"
           type="text"
           value={name}
+          div_extra="flex-col"
           onChange={(e) => setName(e.target.value)}
         />
 
@@ -60,6 +62,7 @@ const RegisterForm = () => {
             id="password"
             type="password"
             value={password}
+            div_extra="flex-col"
             onChange={(e) => setPassword(e.target.value)}
           />
           <Input
@@ -68,6 +71,7 @@ const RegisterForm = () => {
             id="password-confirmation"
             type="password"
             value={password_confirmation}
+            div_extra="flex-col"
             onChange={(e) => setPassword_confirmation(e.target.value)}
           />
         </div>
@@ -75,6 +79,7 @@ const RegisterForm = () => {
         <div>
           <label htmlFor="role">Account Type</label>
           <div className="flex gap-4 h-full">
+            
             <Input
               label="recruiter"
               name="role"
@@ -82,7 +87,7 @@ const RegisterForm = () => {
               type="radio"
               value="recruiter"
               extra="w-3"
-              div_extra="flex items-center gap-2"
+              div_extra="items-center"
               onChange={(e) => setRole(e.target.value)}
             />
 
@@ -93,7 +98,7 @@ const RegisterForm = () => {
               type="radio"
               value="candidate"
               extra="w-3"
-              div_extra="flex items-center gap-2"
+              div_extra="items-center"
               onChange={(e) => setRole(e.target.value)}
             />
           </div>
