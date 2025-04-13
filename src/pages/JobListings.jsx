@@ -24,23 +24,11 @@ export default function JobListings() {
 
   useEffect(() => {
     setFilteredJobs(
-      jobs.filter(job =>
+      jobs.filter((job) =>
         job.title.toLowerCase().includes(searchTerm.toLowerCase())
       )
     );
   }, [searchTerm, jobs]);
-
-  const handleApply = async (jobId) => {
-    try {
-      const response = await axios.post(`http://127.0.0.1:8000/api/apply/${jobId}`, {
-        // Include any necessary application data here
-      })           
-      alert("Application submitted successfully!");
-    } catch (error) {
-      console.error("Error submitting application:", error);
-      alert("Failed to submit application.");
-    }
-  };
 
   return (
     <div className="px-4">
@@ -50,7 +38,7 @@ export default function JobListings() {
       <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-6 my-20">
         {Array.isArray(filteredJobs) && filteredJobs.length > 0 ? (
           filteredJobs.map((job) => (
-            <Job key={job.id} job={job} onApply={handleApply} />
+            <Job key={job.id} job={job} />
           ))
         ) : (
           <p className="col-span-full text-center text-gray-500">

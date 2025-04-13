@@ -4,11 +4,10 @@ import { useState } from "react";
 function NavBar() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
-  
+
   const logOut = () => {
     sessionStorage.removeItem("token");
-    navigate("/joblistings");
-
+    navigate("/");
   };
 
   return (
@@ -19,11 +18,9 @@ function NavBar() {
         </Link>
         <ul className="flex items-center text-white">
           <li className="mr-4 text-sm capitalize hover:">
-            <Link to="/joblistings">Jobs</Link>
+            <Link to="/">Jobs</Link>
           </li>
-          <li className="mr-4 text-sm capitalize hover:">
-            <Link to="/dashboard">dashboard</Link>
-          </li>
+
           {!sessionStorage.getItem("token") && (
             <>
               <li className="mr-4 text-sm capitalize hover:">

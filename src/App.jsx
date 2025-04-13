@@ -3,48 +3,54 @@ import NavBar from "./components/NavBar";
 import JobListings from "./pages/JobListings";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
-import RecruiterDashboard from "./components/RecruiterDashboard";
 import { jwtDecode } from "jwt-decode";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AuthProvider } from "./context/AuthContext";
+import ProtectedRoute from "./routes/PritectedRoutes";
+import RecruiterDashboard from "./pages/RecruiterDashboard";
+import PublicRoute from "./routes/PublicRoutes";
+import CandidateDashboard from "./pages/CandidateDashboard";
 
 const App = () => {
-  const [decodedToken, setDecodedToken] = useState("");
+  const [decodedToken, setDecodedToken] = useState(null);
   const [userRole, setUserRole] = useState("");
 
-  if (sessionStorage.getItem("token")) {
-    setDecodedToken(jwtDecode(sessionStorage.getItem("token")));
-    setUserRole(decodedToken.role);
-  }
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    if (token) {
+      const decoded = jwtDecode(token);
+      setDecodedToken(decoded);
+      setUserRole(decoded.role);
+    }
+  }, []); // 👈 Run only once on initial load
 
   return (
-    <>
-      <BrowserRouter>
+    <BrowserRouter>
+      <AuthProvider>
         <NavBar />
         <Routes>
-          <Route path="joblistings" element={<JobListings />}></Route>
-
+          <Route path="/" element={<JobListings />} />
           <Route
             path="login"
             element={
-              <AuthProvider>
+              <PublicRoute>
                 <Login />
-              </AuthProvider>
+              </PublicRoute>
             }
-          ></Route>
-
+          />
           <Route
             path="register"
             element={
-              <AuthProvider>
-                {<Register />}
-              </AuthProvider>
+              <PublicRoute>
+                <Register />
+              </PublicRoute>
             }
-          ></Route>
-          <Route path="dashboard" element={<RecruiterDashboard />}></Route>
+          />
+          <Route path="recruiterDash" element={<RecruiterDashboard />}></Route>
+          <Route path="candidateDash" element={<CandidateDashboard />}></Route>
         </Routes>
-      </BrowserRouter>
-    </>
+      </AuthProvider>
+    </BrowserRouter>
   );
 };
 

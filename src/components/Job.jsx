@@ -1,23 +1,25 @@
 import { format } from "date-fns";
 import React, { useState } from "react";
 import axios from "axios";
-import {jwtDecode} from "jwt-decode"; // Make sure to install jwt-decode
+import { jwtDecode } from "jwt-decode"; // Make sure to install jwt-decode
 
-const Job = ({ job, onApply }) => {
+const Job = ({ job }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [coverLetter, setCoverLetter] = useState(null);
   const [cv, setCv] = useState(null);
+  const [success, setSuccess] = useState("");
   const token = sessionStorage.getItem("token");
-  const candidateId = token ? jwtDecode(token).sub : null; // Extract candidate ID from token
+  const candidateId = token ? jwtDecode(token).sub : null;
 
   const handleApply = () => {
-    setIsModalOpen(true); // Open the modal
+    setIsModalOpen(true);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData();
+
     formData.append("jobad_id", job.id);
     formData.append("candidate_id", candidateId);
     formData.append("coverLetter", coverLetter);
@@ -30,16 +32,12 @@ const Job = ({ job, onApply }) => {
         {
           headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
           },
         }
       );
+      setSuccess(response.data.message);
 
-      if (onApply) {
-        onApply(response.data); // Call the onApply function with the response data
-      }
-
-      // Reset form and close modal
       setCoverLetter(null);
       setCv(null);
       setIsModalOpen(false);
@@ -54,6 +52,11 @@ const Job = ({ job, onApply }) => {
       key={job.id}
       className="bg-violet-100 rounded-2xl shadow-lg p-6 transition hover:shadow-xl flex flex-col justify-between"
     >
+      {success != "" && (
+        <div className="bg-green-400 w-full py-1 text-center">
+          <p>{success}</p>
+        </div>
+      )}
       <div>
         <h3 className="text-lg font-semibold text-violet-900">
           {job.salaryRange} MAD{" "}
