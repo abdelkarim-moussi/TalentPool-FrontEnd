@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import Input from "./Input";
 import Button from "./Button";
+import ReactPasswordChecklist from "react-password-checklist";
 
 const RegisterForm = () => {
   const [name, setName] = useState("");
@@ -76,10 +77,19 @@ const RegisterForm = () => {
           />
         </div>
 
+        <ReactPasswordChecklist
+          className="text-sm"
+          iconSize={10}
+          rules={["minLength", "specialChar", "capital", "letter","match"]}
+          minLength={8}
+          value={password}
+          valueAgain={password_confirmation}
+          onChange={(isValid) => {}}
+        />
+
         <div>
           <label htmlFor="role">Account Type</label>
           <div className="flex gap-4 h-full">
-            
             <Input
               label="recruiter"
               name="role"

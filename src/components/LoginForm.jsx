@@ -3,9 +3,6 @@ import Button from "./Button";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Input from "./Input";
-import ReactPasswordChecklist from "react-password-checklist";
-import { rules } from "eslint-plugin-react-refresh";
-import { isValid } from "date-fns";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -16,8 +13,6 @@ const LoginForm = () => {
     const regex = /^\S+@\S+\.\S+$/;
     return regex.test(value);
   };
-
-  const validatePassword = (value) => {};
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -70,12 +65,6 @@ const LoginForm = () => {
           value={password}
           div_extra="flex-col"
           onChange={(e) => setPassword(e.target.value)}
-        />
-        <ReactPasswordChecklist className="text-sm" iconSize={10}
-          rules={["minLength", "specialChar", "capital", "letter"]}
-          minLength = {8}
-          value={password}
-          onChange={(isValid)=>{}}
         />
 
         <Button type="submit" text="login" />
