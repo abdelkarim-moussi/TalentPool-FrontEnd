@@ -15,6 +15,9 @@ function NavBar() {
           <li className="mr-4 text-sm capitalize hover:">
             <Link to="/JobListings">Jobs</Link>
           </li>
+          <li className="mr-4 text-sm capitalize hover:">
+            <Link to="/dashboard">dashboard</Link>
+          </li>
           <li className="mr-4">
             <Link to="/login" className="px-3 py-0.5 bg-[#D9E0A4] rounded-md text-black text-center transition hover:bg-[#ABB17B] hover:text-white">login</Link>
           </li>

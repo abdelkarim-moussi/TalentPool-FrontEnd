@@ -1,10 +1,52 @@
 import { format } from "date-fns";
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
+import {jwtDecode} from "jwt-decode"; // Make sure to install jwt-decode
 
 const Job = ({ job, onApply }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [coverLetter, setCoverLetter] = useState(null);
+  const [cv, setCv] = useState(null);
+  const token = sessionStorage.getItem("token");
+  const candidateId = token ? jwtDecode(token).sub : null; // Extract candidate ID from token
+  console.log(jwtDecode(token));
+
   const handleApply = () => {
-    if (onApply) {
-      onApply(job.id); // Call the onApply function with the job ID
+    setIsModalOpen(true); // Open the modal
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("jobad_id", job.id);
+    formData.append("candidate_id", candidateId);
+    formData.append("coverLetter", coverLetter);
+    formData.append("cv", cv);
+
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/applications",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`
+          },
+        }
+      );
+
+      if (onApply) {
+        onApply(response.data); // Call the onApply function with the response data
+      }
+
+      // Reset form and close modal
+      setCoverLetter(null);
+      setCv(null);
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error("Application submission failed:", error);
+      alert("Failed to submit application. Please try again.");
     }
   };
 
@@ -32,6 +74,55 @@ const Job = ({ job, onApply }) => {
       >
         Apply Now
       </button>
+
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white rounded-lg p-6 w-11/12 md:w-1/3">
+            <h2 className="text-lg font-semibold mb-4">
+              Apply for {job.title}
+            </h2>
+            <form onSubmit={handleSubmit}>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700">
+                  Cover Letter (PDF)
+                </label>
+                <input
+                  type="file"
+                  accept=".pdf"
+                  onChange={(e) => setCoverLetter(e.target.files[0])}
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700">
+                  CV (PDF, DOC, DOCX)
+                </label>
+                <input
+                  type="file"
+                  accept=".pdf, .doc, .docx"
+                  onChange={(e) => setCv(e.target.files[0])}
+                  required
+                />
+              </div>
+              <div className="flex justify-end">
+                <button
+                  type="button"
+                  className="mr-2 bg-gray-300 text-gray-800 py-2 px-4 rounded-md"
+                  onClick={() => setIsModalOpen(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="bg-blue-600 text-white py-2 px-4 rounded-md"
+                >
+                  Submit Application
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

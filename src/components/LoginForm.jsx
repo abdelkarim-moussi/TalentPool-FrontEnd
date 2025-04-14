@@ -36,6 +36,7 @@ const LoginForm = () => {
 
       alert("your are loged in");
       sessionStorage.setItem("token", JSON.stringify(response.data.token));
+      sessionStorage.setItem("user", JSON.stringify(response.data.user));
     } catch (error) {
       console.log("Login Failed", error);
     }

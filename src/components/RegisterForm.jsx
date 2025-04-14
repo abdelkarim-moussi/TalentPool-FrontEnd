@@ -27,6 +27,7 @@ const RegisterForm = () => {
 
       alert(response.data.message);
       sessionStorage.setItem("token", JSON.stringify(response.data.token));
+      sessionStorage.setItem("user", JSON.stringify(response.data.user));
     } catch (error) {
       console.error("Registration failed");
     }
