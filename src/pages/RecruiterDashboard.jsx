@@ -91,7 +91,6 @@ export default function RecruiterDashboard() {
     } catch (error) {
       console.error("Failed to delete job ad:", error);
     }
-    
   };
 
   const fetchApplications = async (jobadId) => {
@@ -145,7 +144,6 @@ export default function RecruiterDashboard() {
       ]);
       setJobStats(jobRes.data || {});
       setAppStats(appRes.data || {});
-
     } catch (err) {
       console.error("Error fetching statistics:", err);
     }
@@ -160,7 +158,6 @@ export default function RecruiterDashboard() {
           <p>
             <strong>Total:</strong> {jobStats.total_jobAds || 0}
           </p>
-         
         </div>
 
         <div className="bg-white rounded-xl shadow p-6">
