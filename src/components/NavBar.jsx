@@ -4,10 +4,11 @@ import { useState } from "react";
 function NavBar() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
-
+  
   const logOut = () => {
     sessionStorage.removeItem("token");
     navigate("/joblistings");
+
   };
 
   return (
