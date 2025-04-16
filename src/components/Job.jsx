@@ -9,7 +9,6 @@ const Job = ({ job, onApply }) => {
   const [cv, setCv] = useState(null);
   const token = sessionStorage.getItem("token");
   const candidateId = token ? jwtDecode(token).sub : null; // Extract candidate ID from token
-  console.log(jwtDecode(token));
 
   const handleApply = () => {
     setIsModalOpen(true); // Open the modal

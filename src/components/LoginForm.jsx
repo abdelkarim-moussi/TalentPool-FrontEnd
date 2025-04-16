@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import Button from "./Button";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Input from "./Input";
+import { jwtDecode } from "jwt-decode";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
+  const navigate = useNavigate();
+  
+  
   const validateEmail = (value) => {
     const regex = /^\S+@\S+\.\S+$/;
     return regex.test(value);
@@ -34,11 +37,25 @@ const LoginForm = () => {
         password,
       });
 
-      alert("your are loged in");
-      sessionStorage.setItem("token", JSON.stringify(response.data.token));
-      sessionStorage.setItem("user", JSON.stringify(response.data.user));
+      // Store token and user data
+      const token = response.data.token;
+      sessionStorage.setItem("token", token);
+      
+      // Decode token to get user info
+      const decodedToken = jwtDecode(token);
+      
+      // Alert and redirect based on role
+      alert("You are logged in successfully!");
+      
+      if (decodedToken.role === "recruiter") {
+        navigate("/dashboard");
+      } else {
+        navigate("/"); 
+      }
+      
     } catch (error) {
-      console.log("Login Failed", error);
+      console.error("Login Failed", error);
+      alert("Login failed. Please check your credentials.");
     }
   };
 

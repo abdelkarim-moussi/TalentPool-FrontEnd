@@ -1,9 +1,14 @@
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, Navigate, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 function NavBar() {
-
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+
+  const logOut = () => {
+    sessionStorage.removeItem("token");
+    navigate("/joblistings");
+  };
 
   return (
     <>
@@ -13,20 +18,36 @@ function NavBar() {
         </Link>
         <ul className="flex items-center text-white">
           <li className="mr-4 text-sm capitalize hover:">
-            <Link to="/JobListings">Jobs</Link>
+            <Link to="/joblistings">Jobs</Link>
           </li>
           <li className="mr-4 text-sm capitalize hover:">
             <Link to="/dashboard">dashboard</Link>
           </li>
-          <li className="mr-4">
-            <Link to="/login" className="px-3 py-0.5 bg-[#D9E0A4] rounded-md text-black text-center transition hover:bg-[#ABB17B] hover:text-white">login</Link>
-          </li>
-          <li className="mr-4">
-            <Link to="/register" setUser={setUser} className="px-3 py-0.5 bg-[#D9E0A4] rounded-md text-black text-center transition hover:bg-[#ABB17B] hover:text-white">register</Link>
-          </li>
-          <li>
-            {user && <Link>todo</Link>}
-          </li>
+          {!sessionStorage.getItem("token") && (
+            <>
+              <li className="mr-4 text-sm capitalize hover:">
+                <Link to="/login">login</Link>
+              </li>
+
+              <li className="mr-4">
+                <Link
+                  to="/register"
+                  setUser={setUser}
+                  className="px-4 py-1 bg-[#D9E0A4] rounded-md text-black text-center transition hover:bg-[#ABB17B] hover:text-white capitalize"
+                >
+                  register
+                </Link>
+              </li>
+            </>
+          )}
+
+          {sessionStorage.getItem("token") && (
+            <>
+              <li>
+                <button onClick={logOut}>logout</button>
+              </li>
+            </>
+          )}
         </ul>
       </nav>
       <Outlet />

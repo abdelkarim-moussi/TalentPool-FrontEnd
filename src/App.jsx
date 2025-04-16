@@ -5,6 +5,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import RecruiterDashboard from "./components/RecruiterDashboard";
 
+
 const App = () => {
 
   return (
