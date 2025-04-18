@@ -1,17 +1,17 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Button from "./Button";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import axios from "axios";
 import Input from "./Input";
 import { jwtDecode } from "jwt-decode";
+import { useAuth } from "../context/AuthContext";
 
 const LoginForm = () => {
+  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  
-  
+
   const validateEmail = (value) => {
     const regex = /^\S+@\S+\.\S+$/;
     return regex.test(value);
@@ -28,35 +28,9 @@ const LoginForm = () => {
     }
   };
 
-  const handleLogin = async (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
-
-    try {
-      const response = await axios.post("http://127.0.0.1:8000/api/login", {
-        email,
-        password,
-      });
-
-      // Store token and user data
-      const token = response.data.token;
-      sessionStorage.setItem("token", token);
-      
-      // Decode token to get user info
-      const decodedToken = jwtDecode(token);
-      
-      // Alert and redirect based on role
-      alert("You are logged in successfully!");
-      
-      if (decodedToken.role === "recruiter") {
-        navigate("/dashboard");
-      } else {
-        navigate("/"); 
-      }
-      
-    } catch (error) {
-      console.error("Login Failed", error);
-      alert("Login failed. Please check your credentials.");
-    }
+    login({ email, password });
   };
 
   return (
@@ -88,7 +62,7 @@ const LoginForm = () => {
         <Button type="submit" text="login" />
 
         <p className="text-center">
-          don't have an account :{" "}
+          don't have an account :
           <Link className="text-semibold" to="../register">
             Sign Up
           </Link>

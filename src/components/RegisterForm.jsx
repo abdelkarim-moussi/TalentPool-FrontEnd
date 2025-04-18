@@ -1,12 +1,13 @@
 import { useState } from "react";
-import PrimaryButton from "./PrimaryButton";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import Input from "./Input";
 import Button from "./Button";
 import ReactPasswordChecklist from "react-password-checklist";
+import { useAuth } from "../context/AuthContext";
 
 const RegisterForm = () => {
+  const { register } = useAuth();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
@@ -15,22 +16,8 @@ const RegisterForm = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-
-    try {
-      const response = await axios.post("http://127.0.0.1:8000/api/register", {
-        name,
-        email,
-        role,
-        password,
-        password_confirmation,
-      });
-
-      alert(response.data.message);
-      sessionStorage.setItem("token", JSON.stringify(response.data.token));
-      sessionStorage.setItem("user", JSON.stringify(response.data.user));
-    } catch (error) {
-      console.error("Registration failed");
-    }
+    register({ name, email, role, password, password_confirmation });
+    
   };
 
   return (
@@ -48,7 +35,7 @@ const RegisterForm = () => {
         />
 
         <Input
-          label="Email"
+          label="Name"
           name="Name"
           id="name"
           type="text"
@@ -81,7 +68,7 @@ const RegisterForm = () => {
         <ReactPasswordChecklist
           className="text-sm"
           iconSize={10}
-          rules={["minLength", "specialChar", "capital", "letter","match"]}
+          rules={["minLength", "specialChar", "capital", "letter", "match"]}
           minLength={8}
           value={password}
           valueAgain={password_confirmation}
@@ -118,7 +105,7 @@ const RegisterForm = () => {
         <Button type="submit" text="sign up" />
 
         <p className="text-center">
-          already have an account :{" "}
+          already have an account :
           <Link className="text-semibold" to="../login">
             Log in
           </Link>

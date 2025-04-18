@@ -34,7 +34,7 @@ export default function JobListings() {
     try {
       const response = await axios.post(`http://127.0.0.1:8000/api/apply/${jobId}`, {
         // Include any necessary application data here
-      });
+      })           
       alert("Application submitted successfully!");
     } catch (error) {
       console.error("Error submitting application:", error);
